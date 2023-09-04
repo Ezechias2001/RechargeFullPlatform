@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register
+{% endblock %}
+
+{% block body %}
+
+	{% include "__fragments/nav.html.twig" %}
+
+	<!-- Page content START -->
+	<div class="page-content">
+		<section class="vh-xxl-100">
+			<div class="container h-100 d-flex px-0 px-sm-4">
+				<div class="row justify-content-center align-items-center m-auto">
+					<div class="col-12">
+						<div class="bg-mode shadow rounded-3 overflow-hidden">
+							<div
+								class="row g-0">
+								<!-- Vector Image -->
+								<div class="col-lg-6 d-md-flex align-items-center order-2 order-lg-1">
+									<div class="p-3 p-lg-5">
+										<img src="assets/images/element/signin.svg" alt="">
+									</div>
+									<!-- Divider -->
+									<div class="vr opacity-1 d-none d-lg-block"></div>
+								</div>
+
+								<!-- Information -->
+								<div class="col-lg-6 order-1">
+									<div
+										class="p-4 p-sm-6">
+										<!-- Logo -->
+										<a href="index.html">
+											<img class="h-50px mb-4" src="assets/images/logo-icon.svg" alt="logo">
+										</a>
+										<!-- Title -->
+										<h1 class="mb-2 h3">Créer un compte</h1>
+										<!-- Form START -->
+
+										{{ form_errors(registrationForm) }}
+
+										{{ form_start(registrationForm) }}
+										{{ form_row(registrationForm.email) }}
+										{{ form_row(registrationForm.FullName) }}
+										{{ form_row(registrationForm.role) }}
+                                        <div class="mb-3 position-relative">
+                                            {{ form_row(registrationForm.plainPassword, { label: 'Password' }) }}
+                                            <span class="position-absolute top-50 end-0 translate-middle-y p-0 mt-3">
+                                                <i class="fakepasswordicon fas fa-eye-slash cursor-pointer p-2 mb-2"></i>
+                                            </span>
+    									</div>  
+										<button type="submit" class="btn btn-primary w-100 mb-0">Créer le compte</button>
+										{{ form_end(registrationForm) }}
+
+										<!-- Form END -->
+                                        
+										<p class="mt-3">Vous avez déjà un compte ?<a href="sign-in.html">
+												Se connecter</a>
+										</p>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+{% endblock %}
