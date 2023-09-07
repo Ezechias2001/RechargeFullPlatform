@@ -16,7 +16,11 @@
 
 			<div class="row mb-4">
 				<div class="col-9">
-					<h3 class="mb-0">Liste des recharges utilisées par {{app.user.FullName}} </h3>
+					<h3 class="mb-0">Liste des recharges </h3>
+				</div>
+				<div class="col-3">
+					<a class="btn btn-primary" href="{{ path('app_recharge_new') }}">
+						<i class="bi bi-plus-circle mx-2"></i>Créer une recharge</a>
 				</div>
 			</div>
 
@@ -29,9 +33,9 @@
 						<th>Montant</th>
 						{% if role == "ROLE_SUPER_MARCHANT"  %}						
 						<th>Reference</th>
-						<th>Code</th>	
-						{% endif %}		
-						<th>Utilisé Par</th>			
+						<th>Code</th>
+						<th>Utilisé Par</th>	
+						{% endif %}					
 						<th>Date</th>
 						<th>Heure</th>
 						<th>Actions</th>
@@ -53,9 +57,8 @@
 							{% if role == "ROLE_SUPER_MARCHANT"  %}		
 							<td>{{ recharge.Reference }}</td>
 							<td>{{ recharge.Code }}</td>
-							{% endif %}		
-							
-							<td> {{recharge.getutilisePar.FullName}} </td>		
+							<td>  </td>
+							{% endif %}				
 							
 							<td>{{ recharge.date }}</td>
 							<td>{{ recharge.heure}}</td>

@@ -1,0 +1,276 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Détails Superviseur
+{% endblock %}
+
+{% block body %}
+	{% include "__fragments/nav.html.twig" %}
+	{% include "__fragments/headerAdmin.html.twig" %}
+	<div class="container row g-4">
+		<div
+			class="page-content-wrapper p-xxl-4">
+			<!-- Counter START -->
+			<div
+				class="row g-4 mb-4">
+				<!-- Counter item -->
+				<div class="col-lg-4">
+					<div class="card card-body border border-primary bg-primary bg-opacity-10 border-opacity-25 p-4 h-100">
+						<div
+							class="d-flex justify-content-between align-items-center">
+							<!-- Digit -->
+							<div>
+								<h3 class="mb-0 fw-bold">04</h3>
+								<span class="mb-0 h6 fw-light">Total recharges</span>
+							</div>
+							<!-- Icon -->
+							<div class="icon-lg rounded-circle flex-shrink-0 bg-primary text-white mb-0">
+								<i class="fa-solid fa-hotel fa-fw"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Counter item -->
+				<div class="col-lg-4">
+					<div class="card card-body border border-danger bg-danger bg-opacity-10 border-opacity-25 p-4 h-100">
+						<div
+							class="d-flex justify-content-between align-items-center">
+							<!-- Digit -->
+							<div>
+								<h3 class="mb-0 fw-bold">$586.95</h3>
+								<span class="mb-0 h6 fw-light">Dettes en cours</span>
+							</div>
+							<!-- Icon -->
+							<div class="icon-lg rounded-circle flex-shrink-0 bg-danger text-white mb-0">
+								<i class="fa-regular fa-calendar-days fa-fw"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Counter item -->
+				<div class="col-lg-4">
+					<div class="card card-body border border-success bg-success bg-opacity-10 border-opacity-25 p-4 h-100">
+						<div
+							class="d-flex justify-content-between align-items-center">
+							<!-- Digit -->
+							<div>
+								<h3 class="mb-0 fw-bold">$2486.95</h3>
+								<span class="mb-0 h6 fw-light">Recettes effectuées</span>
+							</div>
+							<!-- Icon -->
+							<div class="icon-lg rounded-circle flex-shrink-0 bg-success text-white mb-0">
+								<i class="fa-solid fa-money-bill-trend-up fa-fw"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Counter END -->
+
+			<div
+				class="row g-4 mb-5">
+				<!-- Agent info START -->
+				<div class="col-md-4 col-xxl-3">
+					<div
+						class="card bg-light">
+						<!-- Dropdown button -->
+						<div class="dropdown position-absolute top-0 end-0 m-3">
+							<a href="#" class="btn btn-sm btn-white btn-round lh-lg mb-0" role="button" id="dropdownShare1" data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="bi bi-three-dots fa-fw"></i>
+							</a>
+							<!-- dropdown button -->
+							<ul class="dropdown-menu dropdown-w-sm dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare1">
+								<li>
+									<a class="dropdown-item" href="#">
+										<i class="bi bi-pencil-square fa-fw me-2"></i>Modifier</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#">
+										<i class="bi bi-trash fa-fw me-2"></i>Supprimer</a>
+								</li>
+							</ul>
+						</div>
+						<!-- Card body -->
+						<div
+							class="card-body text-center">
+							<!-- Avatar Image -->
+                            <div class="avatar align-middle">
+                                <div class="avatar-img rounded-circle border border-3 border-info text-bg-dark"><span class="position-absolute top-50 start-50 translate-middle fw-bold">{{ superviseur.FullName|capitalize|slice(0, 4) }}</span></div>
+                            </div>
+							{# <div class="avatar avatar-xl flex-shrink-0 mb-3">
+									<span class="text-primary position-absolute top-50 start-50 translate-middle fw-bold">   {{ superviseur.FullName|capitalize|slice(0, 6) }}</span>
+							</div> #}
+							<!-- Title -->
+							<h5 class="mb-2"> {{superviseur.FullName}} </h5>
+							<ul class="list-inline small mb-0">
+								<li class="list-inline-item me-0">
+									<i class="fa-solid fa-star text-warning"></i>
+								</li>
+								<li class="list-inline-item me-0">
+									<i class="fa-solid fa-star text-warning"></i>
+								</li>
+								<li class="list-inline-item me-0">
+									<i class="fa-solid fa-star text-warning"></i>
+								</li>
+								<li class="list-inline-item me-0">
+									<i class="fa-solid fa-star text-warning"></i>
+								</li>
+								<li class="list-inline-item">
+									<i class="fa-solid fa-star-half-alt text-warning"></i>
+								</li>
+							</ul>
+						</div>
+						<!-- Card footer -->
+						<div class="card-footer bg-light border-top">
+							<h6 class="mb-3">Details</h6>
+							<!-- Email id -->
+							<div class="d-flex align-items-center mb-3">
+								<div class="icon-md bg-mode h6 mb-0 rounded-circle flex-shrink-0">
+									<i class="bi bi-envelope-fill"></i>
+								</div>
+								<div class="ms-2">
+									<small>Email id</small>
+									<h6 class="fw-normal small mb-0">
+										<a href="#"> {{superviseur.email}} </a>
+									</h6>
+								</div>
+							</div>
+
+							<!-- Phone -->
+							<div class="d-flex align-items-center mb-3">
+								<div class="icon-md bg-mode h6 mb-0 rounded-circle flex-shrink-0">
+									<i class="bi bi-telephone-fill"></i>
+								</div>
+								<div class="ms-2">
+									<small>Phone</small>
+									<h6 class="fw-normal small mb-0">
+										<a href="#">+(229) {{superviseur.PhoneNumber}} </a>
+									</h6>
+								</div>
+							</div>
+
+							<!-- Phone -->
+							<div class="d-flex align-items-center mb-3">
+								<div class="icon-md bg-mode h6 mb-0 rounded-circle flex-shrink-0">
+									<i class="bi bi-geo-alt-fill"></i>
+								</div>
+								<div class="ms-2">
+									<small>Agence</small>
+									<h6 class="fw-normal small mb-0"> {{superviseur.Agence}} </h6>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Agent info END -->
+
+				<div
+					class="col-md-8 col-xxl-9">
+					<!-- Personal info START -->
+					<div
+						class="card shadow">
+						<!-- Card header -->
+						<div class="card-header border-bottom">
+							<h5 class="mb-0">Information</h5>
+						</div>
+						<!-- Card body -->
+						<div class="card-body">
+							<div
+								class="row">
+								<!-- Information item -->
+								<div class="col-md-6">
+									<ul class="list-group list-group-borderless">
+										<li class="list-group-item mb-3">
+											<span>Nom Complet:</span>
+											<span class="h6 fw-normal ms-1 mb-0">{{superviseur.FullName}}</span>
+										</li>
+
+										<li class="list-group-item mb-3">
+											<span>Numbero de telephone :</span>
+											<span class="h6 fw-normal ms-1 mb-0">{{superviseur.PhoneNumber}} </span>
+										</li>
+
+										<li class="list-group-item mb-3">
+											<span>Nombre de Marchands enregistrés:</span>
+											<span class="h6 fw-normal ms-1 mb-0">49</span>
+										</li>
+									</ul>
+								</div>
+
+								<!-- Information item -->
+								<div class="col-md-6">
+									<ul class="list-group list-group-borderless">
+										<li class="list-group-item mb-3">
+											<span>Email ID:</span>
+											<span class="h6 fw-normal ms-1 mb-0">{{superviseur.email}}</span>
+										</li>
+
+										<li class="list-group-item mb-3">
+											<span>Agence:</span>
+											<span class="h6 fw-normal ms-1 mb-0">{{superviseur.Agence}}</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Personal info END -->
+			<div class="mt-4">
+			<h5 class="mb-0">Recharges utilisées</h5>
+			<table id="myTable" class="table">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Etat</th>
+						<th>Agence</th>
+						<th>Montant</th>
+						<th>Payé ?</th>
+						{% if role == "ROLE_SUPER_MARCHANT"  %}						
+						<th>Reference</th>
+						<th>Code</th>
+						<th>Utilisé Par</th>	
+						{% endif %}					
+						<th>Date</th>
+						<th>Heure</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for recharge in recharges %}
+						<tr>
+							<td>{{ loop.index }}</td>
+							<td>
+								{% if recharge.etat is null %}
+									<span class="badge text-bg-danger">Non utilisé</span>
+								{% else %}
+									<span class="badge text-bg-success">Déjà utilisé </span>
+								{% endif %}
+							</td>
+							<td>{{ recharge.Agence }}</td>
+							<td>{{ recharge.montant }}</td>
+							<td>   </td>
+							{% if role == "ROLE_SUPER_MARCHANT"  %}		
+							<td>{{ recharge.Reference }}</td>
+							<td>{{ recharge.Code }}</td>
+							<td>  </td>
+							{% endif %}				
+							
+							<td>{{ recharge.date }}</td>
+							<td>{{ recharge.heure}}</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="6">no records found</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		
+				</div>
+				</div>
+			</div>
+			<!-- Row END -->
+		</div>
+	</div>
+{% endblock %}

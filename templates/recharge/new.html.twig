@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Recharge
+{% endblock %}
+
+{% block body %}
+	{% include "__fragments/nav.html.twig" %}
+	{% include "__fragments/headerAdmin.html.twig" %}
+
+	<!-- Top bar END -->
+	<section class="pt-0">
+		<div class="container">
+			<h4>Créer une recharge</h4>
+
+			{{ include('recharge/_form.html.twig') }}
+
+			<a class="mt-7" href="{{ path('app_recharge_index') }}">Retour à la liste</a>
+		</div>
+	</section>
+{% endblock %}
+
+{% block javascripts %}
+	<script>
+		document.addEventListener('DOMContentLoaded', function () { // Vérifier si le message Flash "success" est présent
+        {% if app.request.hasPreviousSession() and app.request.session.flashBag.has('error') %}
+        // Afficher le modal SweetAlert après le chargement de la page
+        Swal.fire({icon: 'error', title: "Erreur", text: "Quelque chose semble incorrect"}){% endif %}
+
+        // Supprimer le message Flash "success" pour qu'il ne soit pas affiché à nouveau après un rechargement de page
+        {% if app.request.hasPreviousSession() %}
+        {% set flashMessages = app.request.session.flashBag.get('error') %}
+        {% endif %}
+        });
+	</script>
+{% endblock %}

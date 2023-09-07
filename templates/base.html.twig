@@ -4,7 +4,7 @@
 
 	<!-- Mirrored from booking.webestica.com/admin-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 04 Sep 2023 09:52:49 GMT -->
 	<head>
-		<title> {% block titlt %}Recharge{% endblock %} </title>
+		<title> {% block title %}Recharge{% endblock %} </title>
 
 		<!-- Meta Tags -->
 		<meta charset="utf-8">
@@ -97,9 +97,14 @@
 
 		<!-- **************** MAIN CONTENT START **************** -->
 		<main>
-			{% block body %}
-            
-            {% endblock %}
+		
+		<!-- Page content START -->
+			<div
+				class="page-content">
+				{% block body %}
+				
+				{% endblock %}
+			</div>
 		</main>
 		<!-- **************** MAIN CONTENT END **************** -->
 

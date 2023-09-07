@@ -1,0 +1,139 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Profil {{app.user.FullName}}  {% endblock %}
+ 
+{% block body %}
+	{% include "__fragments/nav.html.twig" %}
+
+	{% include "__fragments/headerAdmin.html.twig" %}
+
+		<div class="container p-xxl-4">
+
+			<!-- Title -->
+			<div class="row">
+				<div class="col-12 mb-0 mb-sm-2">
+					<h1 class="h3 mb-0">Profil</h1>
+				</div>
+			</div>
+
+			<div
+				class="row g-4">
+				<!-- Profile setting -->
+				<div class="col-lg-6">
+					<div class="card shadow">
+						<div class="card-header border-bottom">
+							<h5 class="card-header-title">Parametres</h5>
+						</div>
+						<div class="card-body">
+							<!-- Full name -->
+							<div class="mb-3">
+								<label class="form-label">Nom Complet</label>
+								<input type="text" class="form-control" value="{{app.user.FullName}}" placeholder="Name">
+							</div>
+							<!-- Profile picture -->
+							<div class="mb-3">
+								<label class="form-label">Profile picture</label>
+								<!-- Avatar upload START -->
+								<div class="d-flex align-items-center">
+									<label
+										class="position-relative me-4" for="uploadfile-1" title="Replace this pic">
+										<!-- Avatar place holder -->
+										<span class="avatar avatar-xl">
+											<img id="uploadfile-1-preview" class="avatar-img rounded-circle border border-white border-3 shadow" src=" {{asset('assets/images/logo-icon.svg')}} " alt="">
+										</span>
+									</label>
+									<!-- Upload button -->
+									<label class="btn btn-sm btn-primary-soft mb-0" for="uploadfile-1">Changer</label>
+									<input id="uploadfile-1" class="form-control d-none" type="file">
+								</div>
+								<!-- Avatar upload END -->
+							</div>
+							<!-- Mobile number -->
+							<div class="mb-3">
+								<label class="form-label">Telephone</label>
+								<input type="text" class="form-control" value="{{app.user.PhoneNumber}}" placeholder="Enter your mobile number">
+							</div>
+							<!-- Birthday -->
+							<div>
+								<label class="form-label">Agence</label>
+								<input type="text" class="form-control flatpickr flatpickr-input" value="{{app.user.Agence}}" placeholder="Enter your birth-date" data-date-format="d M Y" readonly="readonly">
+							</div>
+							<!-- Save button -->
+							<div class="d-flex justify-content-end mt-4">
+								<a href="#" class="btn text-secondary border-0 me-2">Jeter</a>
+								<a href="#" class="btn btn-primary">Sauvegarder les modifications</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--Update Email-->
+				<div class="col-lg-6">
+					<div class="card border mb-3">
+						<!-- Card header -->
+						<div class="card-header border-bottom">
+							<h4 class="card-header-title">Modifier email</h4>
+							<p class="mb-0">Votre adresse e-mail actuelle est
+								<span class="text-primary">{{app.user.email}}</span>
+							</p>
+						</div>
+
+						<!-- Card body START -->
+						<div class="card-body bg-light rounded-bottom rounded-7 p-4">
+							<form method="POST">
+								<!-- Email -->
+								<label class="form-label">Entrez votre nouvel identifiant de messagerie*<span class="text-danger">*</span>
+								</label>
+								<input type="email" name="email" class="form-control" placeholder="Entrez votre identifiant de messagerie*">
+
+								<div class="text-end mt-3">
+									<button type="submit" class="btn btn-primary mb-0">Enregistrer l'e-mail</button>
+								</div>
+							</form>
+						</div>
+						<!-- Card body END -->
+					</div>
+
+					<!-- Update Password  -->
+					<div class="card border">
+						<!-- Card header -->
+						<div class="card-header border-bottom">
+							<h4 class="card-header-title">Mettre à jour le mot de passe</h4>
+						</div>
+
+						<!-- Card body START -->
+						<form class="card-body">
+							<!-- Current password -->
+							<div class="mb-3">
+								<label class="form-label">Mot de passe actuel</label>
+								<input class="form-control" type="password" placeholder="Entrer le mot de passe actuel">
+							</div>
+							<!-- New password -->
+							<div class="mb-3">
+								<label class="form-label"> Entrez un nouveau mot de passe</label>
+								<div class="input-group">
+									<input class="form-control fakepassword" placeholder="Entrez un nouveau mot de passe" type="password" id="psw-input">
+									<span class="input-group-text p-0 bg-transparent">
+										<i class="fakepasswordicon fas fa-eye-slash cursor-pointer p-2"></i>
+									</span>
+								</div>
+							</div>
+							<!-- Confirm -->
+							<div class="mb-3">
+								<label class="form-label">Confirmer le nouveau mot de passe</label>
+								<input class="form-control" type="password" placeholder="Confirmer le nouveau mot de passe">
+							</div>
+
+							<div class="text-end">
+								<a href="#" class="btn btn-primary mb-0">Changer le mot de passe</a>
+							</div>
+						</form>
+						<!-- Card body END -->
+					</div>
+				</div>
+			</div>
+			<!-- Row END -->
+		</div>
+		<!-- Page main content END -->
+	</div> 
+{% endblock %}
