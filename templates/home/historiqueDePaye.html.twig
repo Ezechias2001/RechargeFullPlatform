@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique de Paye
+{% endblock %}
+
+{% block body %}
+	{% include "__fragments/nav.html.twig" %}
+	{% include "__fragments/headerAdmin.html.twig" %}
+	<!-- Top bar END -->
+	<section class="pt-0 mx-2">
+		<div class="container">
+			<div class="col-12">
+				<div
+					class="card border rounded-3">
+					<!-- Card header START -->
+					<div class="card-header border-bottom">
+						<h5 class="card-header-title">Historique de Paye</h5>
+					</div>
+					<!-- Card header END -->
+
+					<!-- Card body START -->
+					<div
+						class="card-body">
+
+						<!-- Hotel room list START -->
+						<div class="table-responsive border-0">
+							<table id="myTable"
+								class="table align-middle pt-2 mb-0 table-hover table-shrink">
+								<!-- Table head -->
+								<thead class="table-light">
+									<tr>
+										<th scope="col" class="border-0 rounded-start">ID</th>
+										<th scope="col" class="border-0">Montant</th>
+										<th scope="col" class="border-0">
+											{% if role == "ROLE_SUPER_MARCHANT"  %}
+												Superviseur
+											{% else %}
+												Marchand
+											{% endif %}
+										</th>
+										<th scope="col" class="border-0 rounded-end">
+											{% if role == "ROLE_SUPER_MARCHANT"  %}
+												Super Marchand
+											{% else %}
+												Superviseur
+											{% endif %}
+										</th>
+                                        {% if role == "ROLE_SUPER_MARCHANT"  %}
+										    <th scope="col" class="border-0 rounded-end">Statut</th>
+										{% endif %}
+
+										<th scope="col" class="border-0">Date</th>
+									</tr>
+								</thead>
+
+								<!-- Table body START -->
+								<tbody class="border-top-0">
+                                
+									{% for historique in historiques %}
+                                        {% if (app.user == historique.superviseur)  or (app.user == historique.marchand)  %}
+										<!-- Table item -->
+                                            <tr>
+                                                <td>
+                                                    {{loop.index}}
+                                                </td>
+                                                <td>{{historique.montant}}
+                                                    F
+                                                </td>
+                                                <td>
+                                                    <div>{{historique.marchand.fullName}}</div>
+                                                </td>
+                                                    <td>
+                                                        <div>
+                                                            {{historique.superviseur.FullName }}
+                                                        </div>
+                                                    </td>
+                                                {% if role == "ROLE_SUPER_MARCHANT"  %}
+                                                    <td>
+                                                        {% if historique.statut == 1  %} 													
+                                                            <div class="badge bg-success bg-opacity-10 text-success">Versé</div>
+                                                        {% else %}
+                                                            <div class="badge bg-danger bg-opacity-10 text-danger">Pas Versé</div>
+                                                        {% endif %}
+                                                    </td>
+                                                {% endif %}
+                                                <td>
+                                                    {{ historique.date|date('d M Y H:i', null, 'fr') }}
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+									{% endfor %}
+								</tbody>
+								<!-- Table body END -->
+							</table>
+						</div>
+						<!-- Hotel room list END -->
+					</div>
+					<!-- Card body END -->
+				</div>
+			</div>
+		</div>
+	</section>
+
+{% endblock %}

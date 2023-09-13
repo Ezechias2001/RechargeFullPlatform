@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Delai{% endblock %}
+
+{% block body %}
+    <h1>Delai</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ delai.id }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ delai.date }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_delai_index') }}">back to list</a>
+
+    <a href="{{ path('app_delai_edit', {'id': delai.id}) }}">edit</a>
+
+    {{ include('delai/_delete_form.html.twig') }}
+{% endblock %}

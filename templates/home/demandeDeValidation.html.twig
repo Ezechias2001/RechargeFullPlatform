@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique de Paye
+{% endblock %}
+
+{% block body %}
+	{% include "__fragments/nav.html.twig" %}
+	{% include "__fragments/headerAdmin.html.twig" %}
+	<!-- Top bar END -->
+	<div class="container row g-4">
+		{{ form_start(form) }}
+
+		<h5>
+			Demander une validation d'une prise de sous à {{app.user.createur.FullName}}
+		</h5>
+		{{ form_row(form.montantPris) }}
+
+		<div class="bottom-0 end-0">
+			<button class="btn btn-primary">{{ button_label|default('Valider') }}</button>
+		</div>
+		{{ form_end(form) }}
+		<a href="{{path('app_home')}}"> Retour </a>
+	</div>
+
+{% endblock %}

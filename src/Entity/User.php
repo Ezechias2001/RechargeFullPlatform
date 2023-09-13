@@ -58,10 +58,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $Marge = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $montantPris = null;
+
+    #[ORM\OneToMany(mappedBy: 'superviseur', targetEntity: HistoriqueDePaye::class, orphanRemoval: true)]
+    private Collection $historiqueDePayes;
+
+    #[ORM\OneToMany(mappedBy: 'fils', targetEntity: Notification::class)]
+    private Collection $notifications;
+
+    #[ORM\OneToMany(mappedBy: 'Demandeur', targetEntity: DemandeDeValidation::class)]
+    private Collection $demandeDeValidations;
+
+    #[ORM\OneToOne(mappedBy: 'fils', cascade: ['persist', 'remove'])]
+    private ?Delai $delai = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->recharges = new ArrayCollection();
+        $this->historiqueDePayes = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
+        $this->demandeDeValidations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -276,5 +294,133 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->Marge = $Marge;
 
         return $this;
+    }
+
+    public function getMontantPris(): ?int
+    {
+        return $this->montantPris;
+    }
+
+    public function setMontantPris(int $montantPris): static
+    {
+        $this->montantPris = $montantPris;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HistoriqueDePaye>
+     */
+    public function getHistoriqueDePayes(): Collection
+    {
+        return $this->historiqueDePayes;
+    }
+
+    public function addHistoriqueDePaye(HistoriqueDePaye $historiqueDePaye): static
+    {
+        if (!$this->historiqueDePayes->contains($historiqueDePaye)) {
+            $this->historiqueDePayes->add($historiqueDePaye);
+            $historiqueDePaye->setSuperviseur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistoriqueDePaye(HistoriqueDePaye $historiqueDePaye): static
+    {
+        if ($this->historiqueDePayes->removeElement($historiqueDePaye)) {
+            // set the owning side to null (unless already changed)
+            if ($historiqueDePaye->getSuperviseur() === $this) {
+                $historiqueDePaye->setSuperviseur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): static
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
+            $notification->setFils($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): static
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getFils() === $this) {
+                $notification->setFils(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DemandeDeValidation>
+     */
+    public function getDemandeDeValidations(): Collection
+    {
+        return $this->demandeDeValidations;
+    }
+
+    public function addDemandeDeValidation(DemandeDeValidation $demandeDeValidation): static
+    {
+        if (!$this->demandeDeValidations->contains($demandeDeValidation)) {
+            $this->demandeDeValidations->add($demandeDeValidation);
+            $demandeDeValidation->setDemandeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemandeDeValidation(DemandeDeValidation $demandeDeValidation): static
+    {
+        if ($this->demandeDeValidations->removeElement($demandeDeValidation)) {
+            // set the owning side to null (unless already changed)
+            if ($demandeDeValidation->getDemandeur() === $this) {
+                $demandeDeValidation->setDemandeur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDelai(): ?Delai
+    {
+        return $this->delai;
+    }
+
+    public function setDelai(?Delai $delai): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($delai === null && $this->delai !== null) {
+            $this->delai->setFils(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($delai !== null && $delai->getFils() !== $this) {
+            $delai->setFils($this);
+        }
+
+        $this->delai = $delai;
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->FullName; 
     }
 }

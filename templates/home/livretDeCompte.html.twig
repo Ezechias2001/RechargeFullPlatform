@@ -1,0 +1,163 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recharge index
+{% endblock %}
+
+{% block body %}
+	{% include "__fragments/nav.html.twig" %}
+
+
+	{% include "__fragments/headerAdmin.html.twig" %}
+	<div class="container row g-4 mb-4">
+			<!-- Counter item -->
+			<div class="col-lg-4">
+				<div class="card card-body border border-warning bg-warning bg-opacity-10 border-opacity-25 p-4 h-100">
+					<div
+						class="d-flex justify-content-between align-items-center">
+						<!-- Digit -->
+						<div>
+							<h3 class="mb-0 fw-bold"> {{user.marge}} F</h3>
+							<span class="mb-0 h6 fw-light">Marge</span>
+						</div>
+						<!-- Icon -->
+						<div class="icon-lg rounded-circle flex-shrink-0 bg-warning text-white mb-0">
+							<i class="fa-regular fa-calendar-days fa-fw"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Counter item -->
+			<div class="col-lg-4">
+				<div class="card card-body border border-danger bg-danger bg-opacity-10 border-opacity-25 p-4 h-100">
+					<div
+						class="d-flex justify-content-between align-items-center">
+						<!-- Digit -->
+						<div>
+							<h3 class="mb-0 fw-bold">
+								{{user.Dette}}
+								F
+							</h3>
+							<span class="mb-0 h6 fw-light">Dettes</span>
+						</div>
+						<!-- Icon -->
+						<div class="icon-lg rounded-circle flex-shrink-0 bg-danger text-white mb-0">
+							<i class="fa-solid fa-money-bill-trend-up fa-fw"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Counter item -->
+			<div class="col-lg-4">
+				<div class="card card-body border border-primary bg-primary bg-opacity-10 border-opacity-25 p-4 h-100">
+					<div
+						class="d-flex justify-content-between align-items-center">
+						<!-- Digit -->
+						<div>
+							<h3 class="mb-0 fw-bold">
+								{{user.montantPris}}
+								F
+							</h3>
+							<span class="mb-0 h6 fw-light">Montant Pris
+							</span>
+						</div>
+						<!-- Icon -->
+						<div class="icon-lg rounded-circle flex-shrink-0 bg-primary text-white mb-0">
+							<i class="fa-solid fa-hotel fa-fw"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		<!-- Top bar END -->
+		<section class="pt-0 mx-2">
+
+			<div class="container ">
+
+				<div class="row mb-4">
+					<div class="col-9">
+						<h3 class="mb-0">Liste des recharges
+						</h3>
+					</div>
+					<div class="col-3">
+					 	{% if role == "ROLE_SUPER_MARCHANT" %}
+							<a class="btn btn-primary" href="{{ path('app_recharge_new') }}">
+							<i class="bi bi-plus-circle mx-2"></i>Créer une recharge</a>
+						{% endif %}
+					</div>
+				</div>
+
+				<table id="myTable" class="table">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Etat</th>
+							<th>Agence</th>
+							<th>Montant</th>
+							{% if role == "ROLE_SUPER_MARCHANT"  %}
+								<th>Reference</th>
+								<th>Code</th>
+							{% endif %}
+							<th>Utilisé Par</th>
+							{% if role == "ROLE_SUPER_MARCHANT"  %}						
+							<th>Superviseur</th>
+							{% endif %}		
+							<th>Date</th>
+							<th>Heure</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for recharge in recharges %}
+							<tr>
+								<td>{{ loop.index }}</td>
+								<td>
+									{% if recharge.etat is null %}
+										<span class="badge text-bg-danger">Non utilisé</span>
+									{% else %}
+										<span class="badge text-bg-success">Déjà utilisé
+										</span>
+									{% endif %}
+								</td>
+								<td>{{ recharge.Agence }}</td>
+								<td>{{ recharge.montant }}</td>
+								{% if role == "ROLE_SUPER_MARCHANT"  %}
+									<td>{{ recharge.Reference }}</td>
+									<td>{{ recharge.Code }}</td>
+								{% endif %}
+								<td> {{recharge.getutilisePar.FullName}} </td>
+								{% if role == "ROLE_SUPER_MARCHANT"  %}		
+								<td>{{ recharge.getutilisePar.getCreateur.getFullName }}</td>
+								{% endif %}		
+								<td>{{ recharge.date }}</td>
+								<td>{{ recharge.heure}}</td>
+								<td>
+									{% if role == "ROLE_SUPER_MARCHANT"  %}
+										<a href="{{ path('app_recharge_edit', {'id': recharge.id}) }}">Modifier</a>
+									{% elseif role == "ROLE_MARCHANT"  %}
+										<a class="btn btn-sm btn-primary" href="{{ path('app_recharge_show', {'id': recharge.id}) }}">Utiliser</a>
+									{% endif %}
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="6">no records found</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+</div></div></div><!-- End Hero -->{% endblock %}{% block javascripts %}<script>document.addEventListener('DOMContentLoaded', function () { // Vérifier si le message Flash "success" est présent
+{% if app.request.hasPreviousSession() and app.request.session.flashBag.has('success') %}
+// Afficher le modal SweetAlert après le chargement de la page
+Swal.fire({title: 'Succès !', text: "L'opération a été un succès.", icon: 'success', confirmButtonColor: '#008060'});{% endif %}
+
+// Supprimer le message Flash "success" pour qu'il ne soit pas affiché à nouveau après un rechargement de page
+{% if app.request.hasPreviousSession() %}
+{% set flashMessages = app.request.session.flashBag.get('success') %}
+{% endif %}
+});</script>{% endblock %}

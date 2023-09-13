@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Delai{% endblock %}
+
+{% block body %}
+    <h1>Create new Delai</h1>
+
+    {{ include('delai/_form.html.twig') }}
+
+    <a href="{{ path('app_delai_index') }}">back to list</a>
+{% endblock %}

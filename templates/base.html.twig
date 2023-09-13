@@ -4,124 +4,156 @@
 
 	<!-- Mirrored from booking.webestica.com/admin-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 04 Sep 2023 09:52:49 GMT -->
 	<head>
-		<title> {% block title %}Recharge{% endblock %} </title>
+		<title>
+			{% block title %}Recharge
+			{% endblock %}
+		</title>
 
 		<!-- Meta Tags -->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta name="author" content="Webestica.com">
-		<meta
-		name="description" content="Booking - Multipurpose Online Booking Theme">
+		<meta name="description" content="Booking - Multipurpose Online Booking Theme">
 
 		<!-- Dark mode -->
 		<script>
 			const storedTheme = localStorage.getItem('theme')
 
-            const getPreferredTheme = () => {
-            if (storedTheme) {
-            return storedTheme
-            }
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-            }
+			const getPreferredTheme = () => {
+			if (storedTheme) {
+			return storedTheme
+			}
+			return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+			}
 
-            const setTheme = function (theme) {
-            if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.setAttribute('data-bs-theme', 'dark')
-            } else {
-            document.documentElement.setAttribute('data-bs-theme', theme)
-            }
-            }
+			const setTheme = function (theme) {
+				if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				document.documentElement.setAttribute('data-bs-theme', 'dark')
+				} else {
+				document.documentElement.setAttribute('data-bs-theme', theme)
+				}
+				}
 
-            setTheme(getPreferredTheme())
+				setTheme(getPreferredTheme())
 
-            window.addEventListener('DOMContentLoaded', () => {
-            var el = document.querySelector('.theme-icon-active');
-            if (el != 'undefined' && el != null) {
-            const showActiveTheme = theme => {
-            const activeThemeIcon = document.querySelector('.theme-icon-active use')
-            const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
-            const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
+				window.addEventListener('DOMContentLoaded', () => {
+				var el = document.querySelector('.theme-icon-active');
+				if (el != 'undefined' && el != null) {
+				const showActiveTheme = theme => {
+				const activeThemeIcon = document.querySelector('.theme-icon-active use')
+				const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+				const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
 
-            document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-            element.classList.remove('active')
-            })
+				document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+				element.classList.remove('active')
+				})
 
-            btnToActive.classList.add('active')
-            activeThemeIcon.setAttribute('href', svgOfActiveBtn)
-            }
+				btnToActive.classList.add('active')
+				activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+				}
 
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-            if (storedTheme !== 'light' || storedTheme !== 'dark') {
-            setTheme(getPreferredTheme())
-            }
-            })
+				window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+				if (storedTheme !== 'light' || storedTheme !== 'dark') {
+				setTheme(getPreferredTheme())
+				}
+				})
 
-            showActiveTheme(getPreferredTheme())
+				showActiveTheme(getPreferredTheme())
 
-            document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
-            toggle.addEventListener('click', () => {
-            const theme = toggle.getAttribute('data-bs-theme-value')
-            localStorage.setItem('theme', theme)
-            setTheme(theme)
-            showActiveTheme(theme)
-            })
-            })
+				document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+				toggle.addEventListener('click', () => {
+				const theme = toggle.getAttribute('data-bs-theme-value')
+				localStorage.setItem('theme', theme)
+				setTheme(theme)
+				showActiveTheme(theme)
+				})
+				})
 
-            }
-            })
+				}
+			})
 		</script>
 
 		<!-- Favicon -->
-		<link
-		rel="shortcut icon" href=" {{asset('assets/images/favicon.ico')}} ">
+		<link rel="shortcut icon" href=" {{asset('assets/images/favicon.ico')}} ">
 
 		<!-- Google Font -->
 		<link rel="preconnect" href="https://fonts.googleapis.com/">
 		<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-		<link
-		rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Poppins:wght@400;500;700&amp;display=swap">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Poppins:wght@400;500;700&amp;display=swap">
 
 		<!-- Plugins CSS -->
 		<link rel="stylesheet" type="text/css" href=" {{asset('assets/vendor/font-awesome/css/all.min.css')}}">
 		<link rel="stylesheet" type="text/css" href=" {{asset('assets/vendor/bootstrap-icons/bootstrap-icons.css')}}">
 		<link rel="stylesheet" type="text/css" href=" {{asset('assets/vendor/overlay-scrollbar/css/overlayscrollbars.min.css')}}">
-		<link
-		rel="stylesheet" type="text/css" href=" {{asset('assets/vendor/apexcharts/css/apexcharts.css')}}">
+		<link rel="stylesheet" type="text/css" href=" {{asset('assets/vendor/apexcharts/css/apexcharts.css')}}">
 
 		<!-- Theme CSS -->
 		<link rel="stylesheet" type="text/css" href=" {{asset('assets/css/style.css')}}">
 
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css"/>
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+		<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 	</head>
 
 	<body>
 
 		<!-- **************** MAIN CONTENT START **************** -->
 		<main>
-		
-		<!-- Page content START -->
-			<div
-				class="page-content">
-				{% block body %}
-				
-				{% endblock %}
-			</div>
-		</main>
-		<!-- **************** MAIN CONTENT END **************** -->
 
-		<!-- Bootstrap JS -->
-		<script src=" {{asset('assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+			<!-- Page content START -->
+			<div class="page-content"> {% block body %}{% endblock %}
+				</div>
+			</main>
+			<!-- **************** MAIN CONTENT END **************** -->
 
-		<!-- Vendor -->
-		<script src=" {{asset('assets/vendor/overlay-scrollbar/js/overlayscrollbars.min.js')}}"></script>
-		<script src=" {{asset('assets/vendor/apexcharts/js/apexcharts.min.js')}}"></script>
+			<!-- Bootstrap JS -->
+			<script src=" {{asset('assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
 
-		<script src=" {{asset('assets/js/functions.js')}}"></script>
+			<!-- Vendor -->
+			<script src=" {{asset('assets/vendor/overlay-scrollbar/js/overlayscrollbars.min.js')}}"></script>
+			<script src=" {{asset('assets/vendor/apexcharts/js/apexcharts.min.js')}}"></script>
 
-		<!-- ThemeFunctions -->
+			<script src=" {{asset('assets/js/functions.js')}}"></script>
 
-		
+			<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+			<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+			<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+			<script src="https://cdn.datatables.net/plug-ins/1.11.5/i18n/French.json"></script>
 
-	</body>
+			<script>
+				$(document).ready(function () {
+				$('#myTable').DataTable( {
+					"language": {
+						"search": "Rechercher :",
+						"paginate": {
+							"previous": "Précédent",
+							"next": "Suivant"
+						},
+						"aria": {
+							"paginate": {
+								"previous": "Previous",
+								"next": "Next"
+							}
+						},
+						"info": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+						"lengthMenu": "Afficher _MENU_ entrées par page"
+					}
+				});
+			});
 
-	<!-- Mirrored from booking.webestica.com/admin-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 04 Sep 2023 09:53:06 GMT -->
-</html>
+			</script>
+			<script>
+				document.addEventListener('DOMContentLoaded', function () {
+					flatpickr('.flatpickr-input');
+				});
+			</script>
+
+
+		</body>
+
+		<!-- Mirrored from booking.webestica.com/admin-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 04 Sep 2023 09:53:06 GMT -->
+	</html>

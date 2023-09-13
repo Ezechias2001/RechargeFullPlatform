@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Delai{% endblock %}
+
+{% block body %}
+    <h1>Edit Delai</h1>
+
+    {{ include('delai/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_delai_index') }}">back to list</a>
+
+    {{ include('delai/_delete_form.html.twig') }}
+{% endblock %}

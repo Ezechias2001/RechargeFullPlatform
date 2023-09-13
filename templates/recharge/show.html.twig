@@ -5,7 +5,7 @@
 
 {% block body %}
 	{% include "__fragments/nav.html.twig" %}
-	{% include "__fragments/headerAdmin.html.twig" %}    
+	{% include "__fragments/headerAdmin.html.twig" %}
 
 	<!-- Top bar END -->
 	<section class="pt-0 mx-2">
@@ -14,23 +14,38 @@
 
 			<div class="row mb-4">
 				<div class="col-9">
-					<h3 class="mb-0"> Infos </h3>
+					<h3 class="mb-0">
+						Infos
+					</h3>
 				</div>
 				<div class="col-3">
 					<a class="btn btn-primary" href="{{ path('app_recharge_new') }}">
 						<i class="bi bi-plus-circle mx-2"></i>Créer une recharge</a>
 				</div>
 			</div>
-            <div class="card card-body border border-success bg-success bg-opacity-10 border-opacity-25 p-4 h-100">
-						<div class="d-flex justify-content-between align-items-center">
-							<!-- Digit -->
-							<div>
-								<h3 class="mb-0 fw-bold">Recharge de {{recharge.montant|number_format(0, ',', '.')}} F </h3>
-								<span class="mb-0 h6 fw-light">Reference : {{recharge.reference }} </span>  <br />
-								<span class="mb-0 h6 fw-light">Code : {{recharge.code }} </span>
-							</div>
-							<!-- Icon -->
-							<div class="icon-lg rounded-circle flex-shrink-0 bg-success text-white mb-0"><i class="bi bi-info-circle-fill"></i></div>
-						</div>
+			<div class="card card-body border border-success bg-success bg-opacity-10 border-opacity-25 p-4 h-100">
+				<div class="d-flex justify-content-between align-items-center">
+					  <!-- Digit -->
+					<div>
+						<h3 class="mb-0 fw-bold">Recharge de
+							{{recharge.montant|number_format(0, ',', '.')}}
+							F
+						</h3>
+						<span class="mb-0 h6 fw-light">Reference :
+							{{recharge.reference }}
+						</span>
+						<br/>
+						<span class="mb-0 h6 fw-light">Code :
+							{{recharge.code }}
+						</span>
 					</div>
+					<!-- Icon -->
+					<div class="icon-lg rounded-circle flex-shrink-0 bg-success text-white mb-0">
+						<i class="bi bi-info-circle-fill"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	</section>
 {% endblock %}

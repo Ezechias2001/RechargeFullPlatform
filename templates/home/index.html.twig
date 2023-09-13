@@ -5,18 +5,45 @@
 
 {% block body %}
 	{% include "__fragments/nav.html.twig" %}
-
-
 	{% include "__fragments/headerAdmin.html.twig" %}
 
 	<!-- Top bar END -->
 	<section class="pt-0 mx-2">
 
-		<div class="container ">
+		<div class="container">
+			
+			<div class="row mb-4">
+				{% for demande in demandes %}
+					{% if (app.user == demande.Demandeur.Createur)  and (demande.etat != 1)  %}	
+					<!-- Counter item -->
+					<div class="col-lg-4">
+						<div class="card card-body border border-danger bg-danger bg-opacity-10 border-opacity-25 p-4 h-100">
+							<div
+								class="d-flex justify-content-between align-items-center">
+								<!-- Digit -->
+								<div>
+									<span class="mb-0 h6 fw-light"> {{demande.demandeur.FullName}} vous demande une confirmation de prise de sous de {{demande.montant}} </span>
+								</div>
+								<!-- Icon -->
+								<div class="icon-lg rounded-circle flex-shrink-0 bg-danger text-white mb-0">
+									<i class="bi bi-info-circle-fill"></i>
+								</div>
+							</div>
+							<a href="{{path('app_confirmer_validation',{id : demande.id})}}" class="mt-3 btn btn-danger"> Confirmer la prise de sous
+							</a>
+						</div>
+					</div>	
+					{% endif %}					
+				{% endfor %}
+					
+			</div>
 
 			<div class="row mb-4">
-				<div class="col-9">
-					<h3 class="mb-0">Liste des recharges utilisées par {{app.user.FullName}} </h3>
+				<div class="col-7">
+					<h3 class="mb-0">Votre Tableau de Bord  </h3>
+				</div>
+				<div class="col-5">
+					<a href="{{path('app_demande_de_validation')}}" class="mt-3 btn btn-success"> Demander une validation de prise de sous </a>
 				</div>
 			</div>
 
@@ -31,10 +58,12 @@
 						<th>Reference</th>
 						<th>Code</th>	
 						{% endif %}		
-						<th>Utilisé Par</th>			
+						<th>Utilisé Par</th>
+						{% if role == "ROLE_SUPER_MARCHANT"  %}						
+						<th>Superviseur</th>
+						{% endif %}				
 						<th>Date</th>
 						<th>Heure</th>
-						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -55,17 +84,12 @@
 							<td>{{ recharge.Code }}</td>
 							{% endif %}		
 							
-							<td> {{recharge.getutilisePar.FullName}} </td>		
-							
+							<td> {{recharge.getutilisePar.FullName}} </td>
+							{% if role == "ROLE_SUPER_MARCHANT"  %}		
+							<td>{{ recharge.getutilisePar.getCreateur.getFullName }}</td>
+							{% endif %}				
 							<td>{{ recharge.date }}</td>
 							<td>{{ recharge.heure}}</td>
-							<td>
-							{% if role == "ROLE_SUPER_MARCHANT"  %}		
-								<a href="{{ path('app_recharge_edit', {'id': recharge.id}) }}">Modifier</a>
-							{% elseif role == "ROLE_MARCHANT"  %}
-								<a class="btn btn-sm btn-primary" href="{{ path('app_recharge_show', {'id': recharge.id}) }}">Utiliser</a>
-							{% endif %}	
-							</td>
 						</tr>
 					{% else %}
 						<tr>
@@ -80,16 +104,17 @@
 		<!-- End Hero -->
 	{% endblock %}
 	{% block javascripts %}
+
 		<script>
 			document.addEventListener('DOMContentLoaded', function () { // Vérifier si le message Flash "success" est présent
-{% if app.request.hasPreviousSession() and app.request.session.flashBag.has('success') %}
-// Afficher le modal SweetAlert après le chargement de la page
-Swal.fire({title: 'Succès !', text: "L'opération a été un succès.", icon: 'success', confirmButtonColor: '#008060'});{% endif %}
+			{% if app.request.hasPreviousSession() and app.request.session.flashBag.has('success') %}
+			// Afficher le modal SweetAlert après le chargement de la page
+			Swal.fire({title: 'Succès !', text: "L'opération a été un succès.", icon: 'success', confirmButtonColor: '#008060'});{% endif %}
 
-// Supprimer le message Flash "success" pour qu'il ne soit pas affiché à nouveau après un rechargement de page
-{% if app.request.hasPreviousSession() %}
-{% set flashMessages = app.request.session.flashBag.get('success') %}
-{% endif %}
-});
+			// Supprimer le message Flash "success" pour qu'il ne soit pas affiché à nouveau après un rechargement de page
+			{% if app.request.hasPreviousSession() %}
+			{% set flashMessages = app.request.session.flashBag.get('success') %}
+			{% endif %}
+			});
 		</script>
 	{% endblock %}

@@ -77,6 +77,10 @@ class RegistrationController extends AbstractController
 
             $user->setRoles($role);
             $user->setCreateur($pere);
+            
+            $user->setDette(0);
+            $user->setMarge(0);
+            $user->setMontantPris(0);
 
             $entityManager->persist($user);
             $entityManager->flush();

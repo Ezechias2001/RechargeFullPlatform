@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230907123554 extends AbstractMigration
+final class Version20230913082038 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,12 @@ final class Version20230907123554 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user ADD dette INT DEFAULT NULL, ADD marge INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE notification ADD date DATETIME DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user DROP dette, DROP marge');
+        $this->addSql('ALTER TABLE notification DROP date');
     }
 }

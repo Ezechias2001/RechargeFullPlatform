@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\HistoriqueDePaye;
+use App\Entity\Notification;
 use Twilio\Rest\Client;
 use App\Entity\Recharge;
 use App\Form\RechargeType;
@@ -11,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/recharge')]    
 class RechargeController extends AbstractController
@@ -47,25 +50,38 @@ class RechargeController extends AbstractController
     public function index(RechargeRepository $rechargeRepository): Response
     {   
         $user = $this->getUser(); 
+        $parent = $user->getCreateur(); 
 
         $roles = $user->getRoles(); // Le rôle que vous souhaitez rechercher
 
         if ( $roles[0] === "ROLE_SUPER_MARCHANT" ) {  
-            $recharges = $rechargeRepository->findAll();
+            $recharges = $rechargeRepository->findByEtatNull();
         } else if ( $roles[0] === "ROLE_SUPERVISEUR") {
             $recharges = $rechargeRepository->findByEtatNull(); 
         }  else if ( $roles[0] === "ROLE_MARCHANT") {
             $recharges = $rechargeRepository->findByEtatNull(); 
         }
-             
+        
+        $calcul = 1 ; 
+        // Si le role est marchant ou superviseur, calcule la difference et stocke dans $calcul && ( || )  
+         if ( $roles[0] === "ROLE_MARCHANT" ) {
+            if ( ($user->getCreateur()->getDette()) >=  ($user->getCreateur()->getMarge()) || ($user->getDette()) >=  ($user->getMarge()) ) {
+                $calcul = 0 ; 
+            }
+        }
+        // Si le role est différent de Super Marchand et que le createur du current User a une dette  
 
         return $this->render('recharge/index.html.twig', [            
             'recharges' => $recharges,
-            'role' => $roles[0]
+            'role' => $roles[0],
+            'calcul' => $calcul,
+            'user' => $user,
+            'parent' => $parent
         ]);
     }
 
-    #[Route('/new', name: 'app_recharge_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_recharge_new', methods: ['GET', 'POST']),
+    IsGranted('ROLE_SUPER_MARCHANT')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {   
         
@@ -109,17 +125,30 @@ class RechargeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_recharge_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_recharge_show', methods: ['GET', 'POST'])]
     public function show(Recharge $recharge, EntityManagerInterface $entityManager): Response
     {   
+        $notification =new Notification();
+
         $user = $this->getUser(); 
+        $parent = $user->getCreateur();
+        $superParent = $parent->getCreateur();
 
         $roles = $user->getRoles(); // Le rôle que vous souhaitez rechercher
 
         $recharge->setUtilisePar($user);
         $recharge->setEtat(1);
 
-        $entityManager->persist($recharge);
+        $user->setDette($user->getDette() + $recharge->getMontant());
+        $parent->setDette($parent->getDette() + $recharge->getMontant());
+        $superParent->setDette($superParent->getDette() + $recharge->getMontant());    
+        
+        $notification->setLibelle('Recharge');
+        $notification->setFils($user);
+        $notification->setMontant($recharge->getMontant());
+
+        $entityManager->persist( $notification, $recharge, $user, $parent, $superParent);
+        
         $entityManager->flush(); 
 
         return $this->render('recharge/show.html.twig', [

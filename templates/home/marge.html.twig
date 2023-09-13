@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Liste des superviseurs
+{% endblock %}
+
+{% block body %}
+	{% include "__fragments/nav.html.twig" %}
+	{% include "__fragments/headerAdmin.html.twig" %}
+
+	<div class="container row g-4">
+		{{ form_start(form) }}
+
+		<h5>
+			Définir la marge de {{fils.FullName}}
+		</h5>
+		{{ form_row(form.marge) }}
+
+		<div class="bottom-0 end-0">
+			<button class="btn btn-primary">{{ button_label|default('Valider') }}</button>
+		</div>
+		{{ form_end(form) }}
+		<a href="{{path('app_supervisor_show',{ id : fils.id})}}"> Retour </a>
+	</div>
+{% endblock %}

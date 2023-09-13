@@ -20,8 +20,8 @@
 							class="d-flex justify-content-between align-items-center">
 							<!-- Digit -->
 							<div>
-								<h3 class="mb-0 fw-bold">04</h3>
-								<span class="mb-0 h6 fw-light">Total recharges</span>
+								<h3 class="mb-0 fw-bold">{{superviseur.marge}} F</h3>
+								<span class="mb-0 h6 fw-light">Sa marge de dette</span>
 							</div>
 							<!-- Icon -->
 							<div class="icon-lg rounded-circle flex-shrink-0 bg-primary text-white mb-0">
@@ -38,7 +38,7 @@
 							class="d-flex justify-content-between align-items-center">
 							<!-- Digit -->
 							<div>
-								<h3 class="mb-0 fw-bold">$586.95</h3>
+								<h3 class="mb-0 fw-bold"> {{superviseur.dette}} F </h3>
 								<span class="mb-0 h6 fw-light">Dettes en cours</span>
 							</div>
 							<!-- Icon -->
@@ -56,7 +56,7 @@
 							class="d-flex justify-content-between align-items-center">
 							<!-- Digit -->
 							<div>
-								<h3 class="mb-0 fw-bold">$2486.95</h3>
+								<h3 class="mb-0 fw-bold">{{superviseur.montantPris}} F</h3>
 								<span class="mb-0 h6 fw-light">Recettes effectuées</span>
 							</div>
 							<!-- Icon -->
@@ -161,6 +161,26 @@
 									<h6 class="fw-normal small mb-0"> {{superviseur.Agence}} </h6>
 								</div>
 							</div>
+
+							<!-- Phone -->
+							<div class="d-flex align-items-center mb-3">
+								<div class="ms-2">
+									<li class="list-group-item">
+										<a href="{{path('app_marge',{ id : superviseur.id})}}" class="btn btn-dark mb-0">Définir une marge de crédit</a>
+									</li>
+								</div>
+							</div>
+							{% if role == "ROLE_SUPER_MARCHANT"  %}
+							<!-- Phone -->
+							<div class="d-flex align-items-center">
+								<div class="ms-2">
+									<li class="list-group-item mb-3">
+										<a href="{{path('app_delai_new',{ id : superviseur.id})}}" class="btn btn-dark mb-0">Définir une date de paye</a>
+									</li>
+								</div>
+							</div>
+							{% endif %}
+							
 						</div>
 					</div>
 				</div>
@@ -211,6 +231,9 @@
 											<span>Agence:</span>
 											<span class="h6 fw-normal ms-1 mb-0">{{superviseur.Agence}}</span>
 										</li>
+										<li class="list-group-item mb-3">
+											<a href="{{path('app_notifier_prise',{ id : superviseur.id})}}" class="btn btn-primary mb-0"><i class="bi bi-coin me-2"></i>Notifier une prise de sous</a>
+										</li>
 									</ul>
 								</div>
 							</div>
@@ -226,11 +249,9 @@
 						<th>Etat</th>
 						<th>Agence</th>
 						<th>Montant</th>
-						<th>Payé ?</th>
 						{% if role == "ROLE_SUPER_MARCHANT"  %}						
 						<th>Reference</th>
-						<th>Code</th>
-						<th>Utilisé Par</th>	
+						<th>Code</th>	
 						{% endif %}					
 						<th>Date</th>
 						<th>Heure</th>
@@ -249,11 +270,9 @@
 							</td>
 							<td>{{ recharge.Agence }}</td>
 							<td>{{ recharge.montant }}</td>
-							<td>   </td>
 							{% if role == "ROLE_SUPER_MARCHANT"  %}		
 							<td>{{ recharge.Reference }}</td>
 							<td>{{ recharge.Code }}</td>
-							<td>  </td>
 							{% endif %}				
 							
 							<td>{{ recharge.date }}</td>
@@ -271,6 +290,65 @@
 				</div>
 			</div>
 			<!-- Row END -->
+			
+		{% if role == "ROLE_SUPER_MARCHANT"  %}
+		<!-- Card body START -->
+					<div
+						class="card-body">
+
+						<!-- Hotel room list START -->
+						<div class="table-responsive border-0">
+							<table
+								class="table align-middle p-4 mb-0 table-hover table-shrink">
+								<!-- Table head -->
+								<thead class="table-light">
+									<tr>
+										<th scope="col" class="border-0 rounded-start">ID</th>
+										<th scope="col" class="border-0">Montant</th>
+										<th scope="col" class="border-0">
+												Marchand
+										</th>
+										<th scope="col" class="border-0 rounded-end">
+												Superviseur
+										</th>
+
+										<th scope="col" class="border-0">Date</th>
+									</tr>
+								</thead>
+
+								<!-- Table body START -->
+								<tbody class="border-top-0">
+									{% for historique in historiques %}
+										<!-- Table item -->
+                                            <tr>
+                                                <td>
+                                                    #{{loop.index}}
+                                                </td>
+                                                <td>{{historique.montant}}
+                                                    F
+                                                </td>
+                                                <td>
+                                                    <div>{{historique.marchand.fullName}}</div>
+                                                </td>
+                                                    <td>
+                                                        <div>
+                                                            {{historique.superviseur.FullName }}
+                                                        </div>
+                                                    </td>
+                                                <td>
+                                                    29 Aug 2022
+                                                </td>
+                                            </tr>
+									{% endfor %}
+								</tbody>
+								<!-- Table body END -->
+							</table>
+						</div>
+						<!-- Hotel room list END -->
+					</div>
+					<!-- Card body END -->
+		{% endif %}
 		</div>
+		
 	</div>
 {% endblock %}
